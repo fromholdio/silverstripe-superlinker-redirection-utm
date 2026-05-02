@@ -5,6 +5,8 @@ namespace Fromholdio\SuperLinkerRedirectionUTM\Extensions;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\FormField;
+use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
@@ -38,7 +40,12 @@ class RedirectionSuperLinkUTMExtension extends Extension
 
     public function updateCMSLinkFields(FieldList $fields, string $fieldPrefix = ''): void
     {
-        if (!$this->isEnabled() || $this->isCMSFieldsReadonly()) {
+        if (!$this->isEnabled()) {
+            return;
+        }
+
+        $isReadonly = $this->isCMSFieldsReadonly();
+        if ($isReadonly && !$this->isSupportedLinkType()) {
             return;
         }
 
@@ -47,23 +54,26 @@ class RedirectionSuperLinkUTMExtension extends Extension
                 $fieldPrefix . 'UTMParameters',
                 _t(__CLASS__ . '.UTMParameters', 'UTM tracking parameters'),
                 [
-                    TextField::create(
+                    $this->createUTMField(
                         $fieldPrefix . 'UTMSource',
-                        _t(__CLASS__ . '.UTMSource', 'Source')
+                        _t(__CLASS__ . '.UTMSource', 'Source'),
+                        $isReadonly
                     )->setDescription(_t(
                         __CLASS__ . '.UTMSourceDescription',
                         'Identifies the source of your traffic, such as newsletter, social, or a referring website.'
                     )),
-                    TextField::create(
+                    $this->createUTMField(
                         $fieldPrefix . 'UTMMedium',
-                        _t(__CLASS__ . '.UTMMedium', 'Medium')
+                        _t(__CLASS__ . '.UTMMedium', 'Medium'),
+                        $isReadonly
                     )->setDescription(_t(
                         __CLASS__ . '.UTMMediumDescription',
                         'Identifies the marketing medium used, such as email, cpc, social, rss, or qrcode.'
                     )),
-                    TextField::create(
+                    $this->createUTMField(
                         $fieldPrefix . 'UTMCampaign',
-                        _t(__CLASS__ . '.UTMCampaign', 'Campaign')
+                        _t(__CLASS__ . '.UTMCampaign', 'Campaign'),
+                        $isReadonly
                     )->setDescription(_t(
                         __CLASS__ . '.UTMCampaignDescription',
                         'Identifies a specific product promotion or campaign, such as summer_sale or promo.'
@@ -72,9 +82,11 @@ class RedirectionSuperLinkUTMExtension extends Extension
             )
         );
 
-        $utmFields
-            ->displayIf($fieldPrefix . 'LinkType')->isEqualTo('sitetree')
-            ->orIf($fieldPrefix . 'LinkType')->isEqualTo('file');
+        if (!$isReadonly) {
+            $utmFields
+                ->displayIf($fieldPrefix . 'LinkType')->isEqualTo('sitetree')
+                ->orIf($fieldPrefix . 'LinkType')->isEqualTo('file');
+        }
 
         $fields->push($utmFields);
     }
@@ -119,6 +131,20 @@ class RedirectionSuperLinkUTMExtension extends Extension
         }
 
         return $params;
+    }
+
+    protected function createUTMField(string $name, string $title, bool $isReadonly): FormField
+    {
+        if (!$isReadonly) {
+            return TextField::create($name, $title);
+        }
+
+        $fieldName = (string) preg_replace('/^.*_/', '', $name);
+        return ReadonlyField::create(
+            $name . 'ReadOnly',
+            $title,
+            $this->owner->getField($fieldName)
+        );
     }
 
     protected function normaliseUTMValue(mixed $value): string

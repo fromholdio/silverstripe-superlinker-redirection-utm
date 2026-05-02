@@ -1,0 +1,9 @@
+---
+Name: fromholdio-superlinker-redirection-utm
+After:
+  - '#fromholdio-superlinker-redirection'
+---
+
+Fromholdio\SuperLinkerRedirection\Model\RedirectionSuperLink:
+  extensions:
+    fioSuperLinkerRedirectionUTM: Fromholdio\SuperLinkerRedirectionUTM\Extensions\RedirectionSuperLinkUTMExtension

@@ -1,0 +1,26 @@
+{
+    "name": "fromholdio/silverstripe-superlinker-redirection-utm",
+    "type": "silverstripe-vendormodule",
+    "description": "Adds UTM tracking parameters to Silverstripe Superlinker Redirection targets",
+    "license": "BSD-3-Clause",
+    "keywords": ["silverstripe", "link", "superlinker", "redirection", "redirects", "utm"],
+    "homepage": "https://github.com/fromholdio/silverstripe-superlinker-redirection-utm",
+    "support": {
+        "issues": "https://github.com/fromholdio/silverstripe-superlinker-redirection-utm/issues"
+    },
+    "authors": [{
+        "name": "Luke Fromhold",
+        "homepage": "https://fromhold.io"
+    }],
+    "require": {
+        "php": "^8.4",
+        "silverstripe/cms": "^5.2 || ^6.0",
+        "fromholdio/silverstripe-superlinker-redirection": "^3 || ^4",
+        "unclecheese/display-logic": "^3 || ^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fromholdio\\SuperLinkerRedirectionUTM\\": "src/"
+        }
+    }
+}

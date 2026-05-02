@@ -8,13 +8,18 @@
     "support": {
         "issues": "https://github.com/fromholdio/silverstripe-superlinker-redirection-utm/issues"
     },
-    "authors": [{
-        "name": "Luke Fromhold",
-        "homepage": "https://fromhold.io"
-    }],
+    "authors": [
+        {
+            "name": "Luke Fromhold",
+            "homepage": "https://fromhold.io"
+        },
+        {
+            "name": "Florian Thoma",
+            "homepage": "https://innoweb.com.au"
+        }
+    ],
     "require": {
         "php": "^8.4",
-        "silverstripe/cms": "^5.2 || ^6.0",
         "fromholdio/silverstripe-superlinker-redirection": "^3 || ^4",
         "unclecheese/display-logic": "^3 || ^4"
     },

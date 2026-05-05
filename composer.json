@@ -19,7 +19,6 @@
         }
     ],
     "require": {
-        "php": "^8.4",
         "fromholdio/silverstripe-superlinker-redirection": "^3 || ^4",
         "unclecheese/display-logic": "^3 || ^4"
     },

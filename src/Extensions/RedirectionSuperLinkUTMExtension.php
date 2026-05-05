@@ -149,6 +149,6 @@ class RedirectionSuperLinkUTMExtension extends Extension
 
     protected function normaliseUTMValue(mixed $value): string
     {
-        return str_replace(' ', '_', mb_trim((string) $value));
+        return str_replace(' ', '_', trim((string) $value));
     }
 }

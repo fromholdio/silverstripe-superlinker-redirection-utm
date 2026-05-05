@@ -4,7 +4,6 @@ Adds optional UTM tracking parameters to sitetree and file targets in `fromholdi
 
 ## Requirements
 
-- PHP 8.4+
 - Silverstripe CMS 5.2 or 6
 - `fromholdio/silverstripe-superlinker-redirection` 3 or 4
 
@@ -24,7 +23,7 @@ The module adds a "UTM tracking parameters" field group to redirection links who
 - `utm_medium`
 - `utm_campaign`
 
-Values are trimmed with `mb_trim()` and spaces are converted to underscores before being stored. Query parameter values are encoded before being appended to the URL.
+Values are trimmed and spaces are converted to underscores before being stored. Query parameter values are encoded before being appended to the URL.
 
 ## Configuration
 
